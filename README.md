@@ -1,3 +1,6 @@
+[![Swift Package Manager Compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg)](https://swift.org/package-manager)
+![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg)
+
 # ScrollableImage
 
 Add zoom and scroll capabilites to Image
@@ -32,5 +35,22 @@ var body: some View {
   }
 }
 ```
+
+## Contribute 
+
+Contributions are warmly welcomed! Feel free to reference the todos above or file an issue.
+
+1. Clone repo, double click the `Package.swift` to open the project
+2. Navigate to sources directory, theres a test image dir, helper dir, and file for the scrollable image code.
+3. The preview works in the [ScrollableImage.swift](Sources/ScrollableImage/ScrollableImage.swift) if you want to see your changes live.
+5. Open a PR 🚀
+
+## Contact
+
+[Twitter](twitter.com/f6ary)
+
+## Liscense
+
+MIT
 
 
