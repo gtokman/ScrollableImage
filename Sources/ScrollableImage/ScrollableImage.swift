@@ -37,6 +37,7 @@ public struct ScrollableImage<Content>: UIViewControllerRepresentable where Cont
 public class ScrollViewImageViewController<Content>: UIHostingController<Content>, UIScrollViewDelegate where Content: View {
 
     var isScrolling: Binding<Bool>
+    var offset: Binding<CGPoint>
     var showed = false
     private var scrollView: UIScrollView?
     private var imageView: UIView?
@@ -257,6 +258,7 @@ struct ScrollPreview: View {
     
     @State var isScrolling: Bool = false
     @State var rect: CGRect = .zero
+    @State var offset: CGPoint = .zero
     
     var image: Image {
         Image("feed-image", bundle: .module)
@@ -272,14 +274,15 @@ struct ScrollPreview: View {
                         Image(systemName: "square.grid.3x2")
                     })
                 }.padding([.horizontal, .top])
-                ScrollViewImage(isScrolling: $isScrolling) {
+                Text("ScrollView offset \(offset.x), \(offset.y)")
+                ScrollableImage(isScrolling: $isScrolling, offset: $offset) {
                     ScrollView(.horizontal) {
                         image
                             .resizable()
                             .aspectRatio(4/5, contentMode: .fit)
+                            .getRect(binding: $rect)
                     }
                 }
-                .getRect(binding: $rect)
                 HStack {
                     Button(action: {}, label: {
                         Text("Do something")
