@@ -3,24 +3,28 @@ import SwiftUI
 // MARK: - View
 
 public extension View {
-    func scrollViewIsScrolling(_ isScrolling: Binding<Bool>) -> some View {
-        return ScrollViewImage(isScrolling: isScrolling) { self }
+    func scrollViewIsScrolling(_ isScrolling: Binding<Bool>, offset: Binding<CGPoint>) -> some View {
+        return ScrollableImage(
+            isScrolling: isScrolling,
+            offset: offset) { self }
     }
 }
 
 // MARK: - View Representable
 
-public struct ScrollViewImage<Content>: UIViewControllerRepresentable where Content: View {
+public struct ScrollableImage<Content>: UIViewControllerRepresentable where Content: View {
     var isScrolling: Binding<Bool>
+    var offset: Binding<CGPoint>
     let content: Content
 
-    init(isScrolling: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) {
+    init(isScrolling: Binding<Bool>, offset: Binding<CGPoint>, @ViewBuilder content: @escaping () -> Content) {
+        self.offset = offset
         self.isScrolling = isScrolling
         self.content = content()
     }
 
     public func makeUIViewController(context: Context) -> ScrollViewImageViewController<Content> {
-        ScrollViewImageViewController(isScrolling: isScrolling, rootView: content)
+        ScrollViewImageViewController(isScrolling: isScrolling, offset: offset, rootView: content)
     }
 
     public func updateUIViewController(_ uiViewController: ScrollViewImageViewController<Content>, context: Context) {
@@ -64,8 +68,9 @@ public class ScrollViewImageViewController<Content>: UIHostingController<Content
         }
     }
 
-    init(isScrolling: Binding<Bool>, showGrid: Bool = true, rootView: Content) {
+    init(isScrolling: Binding<Bool>, offset: Binding<CGPoint>, showGrid: Bool = true, rootView: Content) {
         self.isScrolling = isScrolling
+        self.offset = offset
         super.init(rootView: rootView)
         self.showGrid = showGrid
     }
@@ -214,6 +219,10 @@ public class ScrollViewImageViewController<Content>: UIHostingController<Content
     }
 
     // MARK - UIScrollViewDelegate
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        offset.wrappedValue = scrollView.contentOffset
+    }
 
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         showGrid = true
