@@ -7,7 +7,7 @@ Add zoom and scroll capabilites to Image
 
 ## Demo
 
-![2021-05-02 18 28 12](https://user-images.githubusercontent.com/12258850/116829897-9d630380-ab74-11eb-9dbe-fd2fd22a858e.gif)
+![2021-05-02 19 51 19](https://user-images.githubusercontent.com/12258850/116831870-fd12dc00-ab7f-11eb-9045-66d1b4ffa8e5.gif)
 
 ## Todo
 
@@ -18,6 +18,7 @@ Add zoom and scroll capabilites to Image
 - [ ] Add ablity to hide grid
 - [ ] Support for different aspect ratio changes on Image
 - [ ] Add double tap gesture to zoom on Image
+- [ ] Make parms to ScrollableImage optional
 
 ## Usage 
 
@@ -26,13 +27,14 @@ Add the package to Xcode `https://github.com/gtokman/ScrollableImage.git` and ta
 
 ```swift
 var body: some View {
-  ScrollViewImage(isScrolling: $isScrolling) {
+  ScrollableImage(isScrolling: $isScrolling, offset: $offset) {
       ScrollView(.horizontal) {
-          Image("my-image")
+          Image("name")
               .resizable()
               .aspectRatio(4/5, contentMode: .fit)
+              .getRect(binding: $rect)
       }
-  }
+   }
 }
 ```
 
