@@ -4,13 +4,13 @@ import SwiftUI
 
 public extension View {
     func scrollViewIsScrolling(_ isScrolling: Binding<Bool>) -> some View {
-        return ScrollViewZoomableImageRepresentable(isScrolling: isScrolling) { self }
+        return ScrollViewImage(isScrolling: isScrolling) { self }
     }
 }
 
 // MARK: - View Representable
 
-public struct ScrollViewZoomableImageRepresentable<Content>: UIViewControllerRepresentable where Content: View {
+public struct ScrollViewImage<Content>: UIViewControllerRepresentable where Content: View {
     var isScrolling: Binding<Bool>
     let content: Content
 
@@ -19,18 +19,18 @@ public struct ScrollViewZoomableImageRepresentable<Content>: UIViewControllerRep
         self.content = content()
     }
 
-    public func makeUIViewController(context: Context) -> ScrollViewZoomableImage<Content> {
-        ScrollViewZoomableImage(isScrolling: isScrolling, rootView: content)
+    public func makeUIViewController(context: Context) -> ScrollViewImageViewController<Content> {
+        ScrollViewImageViewController(isScrolling: isScrolling, rootView: content)
     }
 
-    public func updateUIViewController(_ uiViewController: ScrollViewZoomableImage<Content>, context: Context) {
+    public func updateUIViewController(_ uiViewController: ScrollViewImageViewController<Content>, context: Context) {
         // update
     }
 }
 
 // MARK: - View Controller
 
-public class ScrollViewZoomableImage<Content>: UIHostingController<Content>, UIScrollViewDelegate where Content: View {
+public class ScrollViewImageViewController<Content>: UIHostingController<Content>, UIScrollViewDelegate where Content: View {
 
     var isScrolling: Binding<Bool>
     var showed = false
@@ -263,7 +263,7 @@ struct ScrollPreview: View {
                         Image(systemName: "square.grid.3x2")
                     })
                 }.padding([.horizontal, .top])
-                ScrollViewZoomableImageRepresentable(isScrolling: $isScrolling) {
+                ScrollViewImage(isScrolling: $isScrolling) {
                     ScrollView(.horizontal) {
                         image
                             .resizable()
