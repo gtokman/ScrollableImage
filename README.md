@@ -28,7 +28,7 @@ Add the package to Xcode `https://github.com/gtokman/ScrollableImage.git` and ta
 var body: some View {
   ScrollViewImage(isScrolling: $isScrolling) {
       ScrollView(.horizontal) {
-          Imge("my-image")
+          Image("my-image")
               .resizable()
               .aspectRatio(4/5, contentMode: .fit)
       }
@@ -47,7 +47,7 @@ Contributions are warmly welcomed! Feel free to reference the todos above or fil
 
 ## Contact
 
-[Twitter](twitter.com/f6ary)
+[Twitter](https://twitter.com/f6ary)
 
 ## Liscense
 
