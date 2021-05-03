@@ -17,3 +17,9 @@ struct RectGetter: View {
         return Rectangle().fill(Color.clear)
     }
 }
+
+extension View {
+    func getRect(binding: Binding<CGRect>) -> some View {
+        self.background(RectGetter(rect: binding))
+    }
+}

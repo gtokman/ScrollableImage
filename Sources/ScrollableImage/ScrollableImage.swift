@@ -136,6 +136,13 @@ public class ScrollViewImageViewController<Content>: UIHostingController<Content
 
     }
     
+    // MARK - Gestures
+    
+    @objc
+    func handleDoubleTap(_ gestureRecognizer: UIGestureRecognizer) {
+    }
+    
+    
     // MARK - Helpers
     
     private func setMinZoomScaleForImageSize(_ imageSize: CGSize) {
@@ -166,12 +173,6 @@ public class ScrollViewImageViewController<Content>: UIHostingController<Content
         
         scrollView?.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
     }
-
-    @objc
-    func handleDoubleTap(_ gestureRecognizer: UIGestureRecognizer) {
-    }
-    
-    // MARK - Helpers
 
     func setupGrid() {
         vLines.enumerated().forEach { index, view in
@@ -302,11 +303,5 @@ struct ScrollViewThing_Preview: PreviewProvider {
 
     static var previews: some View {
         ScrollPreview()
-    }
-}
-
-extension View {
-    func getRect(binding: Binding<CGRect>) -> some View {
-        self.background(RectGetter(rect: binding))
     }
 }
